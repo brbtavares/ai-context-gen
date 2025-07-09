@@ -1,0 +1,23 @@
+{
+  "entries": [
+    {
+      "timestamp": "2025-01-01T12:00:00Z",
+      "title": "Configuração inicial do projeto Rust",
+      "content": "Para criar um novo projeto Rust:\n1. cargo new nome_projeto\n2. cd nome_projeto\n3. cargo run\n\nPara adicionar dependências, edite o Cargo.toml:\n[dependencies]\nserde = { version = \"1.0\", features = [\"derive\"] }\ntokio = { version = \"1.0\", features = [\"full\"] }",
+      "tags": ["rust", "setup", "cargo", "desenvolvimento"]
+    },
+    {
+      "timestamp": "2025-01-01T12:30:00Z",
+      "title": "Padrões de error handling em Rust",
+      "content": "Rust usa Result<T, E> para tratamento de erros:\n\n// Retorno de função que pode falhar\nfn divide(a: f64, b: f64) -> Result<f64, String> {\n    if b == 0.0 {\n        Err(\"Divisão por zero!\".to_string())\n    } else {\n        Ok(a / b)\n    }\n}\n\n// Uso com match\nmatch divide(10.0, 2.0) {\n    Ok(result) => println!(\"Resultado: {}\", result),\n    Err(e) => println!(\"Erro: {}\", e),\n}\n\n// Uso com ? operator\nfn exemplo() -> Result<(), Box<dyn std::error::Error>> {\n    let resultado = divide(10.0, 2.0)?;\n    println!(\"Resultado: {}\", resultado);\n    Ok(())\n}",
+      "tags": ["rust", "error-handling", "result", "pattern-matching"]
+    },
+    {
+      "timestamp": "2025-01-01T13:00:00Z",
+      "title": "Estrutura de projeto Rust recomendada",
+      "content": "Estrutura típica de um projeto Rust:\n\n```\nmy_project/\n├── Cargo.toml\n├── Cargo.lock\n├── src/\n│   ├── main.rs          # Ponto de entrada para binários\n│   ├── lib.rs           # Raiz da biblioteca\n│   ├── bin/             # Executáveis adicionais\n│   │   └── another_bin.rs\n│   └── modules/         # Módulos organizados\n│       ├── mod.rs\n│       └── utils.rs\n├── tests/              # Testes de integração\n│   └── integration_test.rs\n├── examples/           # Exemplos de código\n│   └── example.rs\n└── README.md\n```",
+      "tags": ["rust", "estrutura", "projeto", "organização"]
+    }
+  ],
+  "current_project": "ia-context-gen"
+}
