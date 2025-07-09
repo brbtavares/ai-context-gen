@@ -9,6 +9,7 @@ A command-line tool in Rust for creating and managing a context window that faci
 - **🔍 Search Entries**: Search by title, content, or tags
 - **🗑️ Clear Entries**: Remove all entries from the context
 - **📊 Context Summary**: Statistics about entries and most used tags
+- **🤖 Auto-scan Project**: Automatically scan and create context from project files
 - **💾 Persistence**: Data automatically saved to `~/.ia-context-gen/context.json`
 
 ## 📋 Prerequisites
@@ -91,7 +92,13 @@ The application presents an interactive menu with the following options:
    - Most used tags
    - Most recent entry
 
-6. **🚪 Exit**
+6. **🤖 Auto-scan project (create context from scratch)**
+   - Automatically scan project files and create context entries
+   - Detects project type and generates comprehensive overview
+   - Processes source code, configuration, and documentation files
+   - Creates intelligent tags based on file types and locations
+
+7. **🚪 Exit**
    - Closes the application
 
 ## 📁 Data Structure
@@ -121,6 +128,33 @@ struct ContextEntry {
 - Document experiment results
 - Create project knowledge base
 
+## 🤖 Auto-scan Feature
+
+The auto-scan feature (option 6) automatically analyzes your project and creates comprehensive context entries:
+
+### Supported File Types
+- **Source Code**: `.rs`, `.py`, `.js`, `.ts`, `.jsx`, `.tsx`, `.java`, `.cpp`, `.go`, `.php`, `.rb`, etc.
+- **Web Files**: `.html`, `.css`, `.scss`, `.vue`, `.svelte`
+- **Configuration**: `.json`, `.yaml`, `.toml`, `.xml`, `.ini`
+- **Documentation**: `.md`, `.txt`, `.rst`
+- **Scripts**: `.sh`, `.bat`, `Dockerfile`, `Makefile`
+
+### Automatic Project Detection
+- **Rust**: Detects `Cargo.toml`, analyzes dependencies
+- **JavaScript/Node.js**: Detects `package.json`, analyzes scripts and dependencies
+- **Python**: Detects `requirements.txt`, `setup.py`, `pyproject.toml`
+- **Java**: Detects `pom.xml` (Maven) or `build.gradle` (Gradle)
+- **Go**: Detects `go.mod`
+- **PHP**: Detects `composer.json`
+- **Ruby**: Detects `Gemfile`
+
+### Intelligent Tagging
+Files are automatically tagged based on:
+- File extension (language)
+- Directory structure (`src/`, `test/`, `config/`, etc.)
+- File purpose (components, utilities, services, etc.)
+- Project type and framework detection
+
 ## 🔮 Usage Example
 
 ```
@@ -133,19 +167,27 @@ Select an option:
 3. 🔍 Search entries
 4. 🗑️  Clear all entries
 5. 📊 Generate context summary
-6. 🚪 Exit
+6. 🤖 Auto-scan project (create context from scratch)
+7. 🚪 Exit
 
-Enter your choice (1-6): 1
-Entry title: Rust Configuration
-📝 Enter the entry content:
-Type 'END' on a separate line to finish:
-To configure a new Rust project:
-1. cargo new project
-2. cd project
-3. cargo run
-END
-Tags (separated by comma): rust, setup, cargo
-✅ Entry added successfully!
+Enter your choice (1-7): 6
+Enter project path (default: current directory): 
+⚠️ This will replace all existing context entries.
+Continue? (y/N): y
+🚀 Starting project scan...
+🔍 Scanning project files...
+📄 Processed 10 files...
+📄 Processed 20 files...
+
+✅ Project scan completed successfully!
+📊 25 files processed
+💾 Context saved to: /home/user/.ia-context-gen/context.json
+
+📋 Context entries created:
+  • Project overview
+  • 25 source files
+
+💡 Use option 2 to view all entries or option 3 to search!
 ```
 
 ## 🛠️ Dependencies
