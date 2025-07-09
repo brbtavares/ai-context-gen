@@ -43,7 +43,10 @@ impl ContextWindow {
 
     fn save(&self) -> Result<(), Box<dyn std::error::Error>> {
         let path = Self::get_context_file_path();
-        
+        self.save_to_path(&path)
+    }
+
+    fn save_to_path(&self, path: &Path) -> Result<(), Box<dyn std::error::Error>> {
         if let Some(parent) = path.parent() {
             fs::create_dir_all(parent)?;
         }
@@ -112,7 +115,7 @@ impl ContextWindow {
         self.entries.clear();
     }
 
-    fn scan_project(&mut self, project_path: &Path) -> Result<usize, Box<dyn std::error::Error>> {
+    fn scan_project(&mut self, project_path: &Path) -> Result<(usize, PathBuf), Box<dyn std::error::Error>> {
         let mut files_processed = 0;
         
         // Clear existing entries for fresh scan
@@ -131,7 +134,11 @@ impl ContextWindow {
         // Add project overview entry
         self.add_project_overview(project_path)?;
         
-        Ok(files_processed)
+        // Save to the project directory instead of home
+        let context_file = project_path.join("ai-context.json");
+        self.save_to_path(&context_file)?;
+        
+        Ok((files_processed, context_file))
     }
     
     fn scan_directory(&mut self, dir: &Path, files_processed: &mut usize) -> Result<(), Box<dyn std::error::Error>> {
@@ -514,11 +521,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 }
                 
                 match context_window.scan_project(&scan_path) {
-                    Ok(files_processed) => {
-                        context_window.save()?;
+                    Ok((files_processed, context_file)) => {
                         println!("\n{}", "✅ Auto-scan completed successfully!".green());
                         println!("{}", format!("📊 Processed {} files", files_processed).cyan());
                         println!("{}", format!("📝 Created {} context entries", context_window.entries.len()).cyan());
+                        println!("{}", format!("💾 Context saved to: {}", context_file.display()).green().bold());
                     }
                     Err(e) => {
                         println!("{}", format!("❌ Error during scan: {}", e).red());
