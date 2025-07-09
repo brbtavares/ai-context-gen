@@ -3,6 +3,19 @@
 version = 4
 
 [[package]]
+name = "ai-context-gen"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "colored",
+ "crossterm",
+ "ctrlc",
+ "dirs",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "android-tzdata"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -152,19 +165,6 @@ dependencies = [
  "cfg-if",
  "libc",
  "wasi",
-]
-
-[[package]]
-name = "ia-context-gen"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "colored",
- "crossterm",
- "ctrlc",
- "dirs",
- "serde",
- "serde_json",
 ]
 
 [[package]]
