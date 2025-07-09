@@ -1,37 +1,37 @@
 #!/bin/bash
 
-# Script de instalação para IA Context Generator
+# Installation script for AI Context Generator
 
-echo "🚀 Instalando IA Context Generator..."
+echo "🚀 Installing AI Context Generator..."
 
-# Compilar em modo release
-echo "📦 Compilando aplicação..."
+# Compile in release mode
+echo "📦 Compiling application..."
 cargo build --release
 
-# Verificar se a compilação foi bem-sucedida
+# Check if compilation was successful
 if [ $? -eq 0 ]; then
-    echo "✅ Compilação concluída com sucesso!"
+    echo "✅ Compilation completed successfully!"
     
-    # Criar diretório bin no home se não existir
+    # Create bin directory in home if it doesn't exist
     mkdir -p ~/.local/bin
     
-    # Copiar o executável
+    # Copy the executable
     cp target/release/ai-context-gen ~/.local/bin/
     
-    # Dar permissão de execução
+    # Give execution permission
     chmod +x ~/.local/bin/ai-context-gen
     
-    echo "📁 Executável instalado em ~/.local/bin/ai-context-gen"
+    echo "📁 Executable installed in ~/.local/bin/ai-context-gen"
     echo ""
-    echo "🎯 Para usar o IA Context Generator, execute:"
+    echo "🎯 To use AI Context Generator, run:"
     echo "   ai-context-gen"
     echo ""
-    echo "💡 Certifique-se de que ~/.local/bin está no seu PATH"
-    echo "   Para adicionar ao PATH, adicione esta linha ao seu ~/.bashrc ou ~/.zshrc:"
+    echo "💡 Make sure ~/.local/bin is in your PATH"
+    echo "   To add to PATH, add this line to your ~/.bashrc or ~/.zshrc:"
     echo "   export PATH=\"\$HOME/.local/bin:\$PATH\""
     echo ""
-    echo "🎉 Instalação concluída!"
+    echo "🎉 Installation complete!"
 else
-    echo "❌ Erro na compilação. Verifique os logs acima."
+    echo "❌ Compilation error. Check the logs above."
     exit 1
 fi

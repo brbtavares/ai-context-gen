@@ -1,37 +1,37 @@
-# Configuração adicional para desenvolvimento
+# Additional configuration for development
 
-# Compilar apenas para desenvolvimento
+# Compile for development only
 dev:
 	cargo run
 
-# Compilar para release
+# Compile for release
 release:
 	cargo build --release
 
-# Executar testes
+# Run tests
 test:
 	cargo test
 
-# Limpar arquivos de build
+# Clean build files
 clean:
 	cargo clean
 
-# Verificar formatação do código
+# Check code formatting
 fmt:
 	cargo fmt
 
-# Verificar linting
+# Check linting
 lint:
 	cargo clippy
 
-# Instalar ferramenta localmente
+# Install tool locally
 install:
 	./install.sh
 
-# Executar com dados de exemplo
+# Run with example data
 demo:
-	@echo "Exemplo de uso da aplicação será iniciado..."
-	@echo "Pressione Ctrl+C para sair"
+	@echo "Example application usage will start..."
+	@echo "Press Ctrl+C to exit"
 	cargo run
 
 .PHONY: dev release test clean fmt lint install demo

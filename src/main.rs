@@ -67,11 +67,11 @@ impl ContextWindow {
 
     fn display_entries(&self) {
         if self.entries.is_empty() {
-            println!("{}", "📝 Nenhuma entrada de contexto encontrada.".yellow());
+            println!("{}", "📝 No context entries found.".yellow());
             return;
         }
 
-        println!("\n{}", "🔍 Janela de Contexto:".green().bold());
+        println!("\n{}", "🔍 Context Window:".green().bold());
         println!("{}", "=".repeat(60).blue());
         
         for (i, entry) in self.entries.iter().enumerate() {
@@ -82,13 +82,13 @@ impl ContextWindow {
                 println!("{} Tags: {}", "🏷️".cyan(), entry.tags.join(", ").purple());
             }
             
-            // Exibir apenas as primeiras 3 linhas do conteúdo
+            // Display only the first 3 lines of content
             let content_lines: Vec<&str> = entry.content.lines().collect();
             for (line_idx, line) in content_lines.iter().enumerate() {
                 if line_idx < 3 {
                     println!("   {}", line);
                 } else if line_idx == 3 && content_lines.len() > 3 {
-                    println!("   {}", format!("... (mais {} linhas)", content_lines.len() - 3).dimmed());
+                    println!("   {}", format!("... ({} more lines)", content_lines.len() - 3).dimmed());
                     break;
                 }
             }
@@ -120,7 +120,7 @@ fn get_input(prompt: &str) -> String {
     match io::stdin().read_line(&mut input) {
         Ok(_) => input.trim().to_string(),
         Err(_) => {
-            println!("{}", "❌ Erro ao ler entrada. Encerrando aplicação.".red());
+            println!("{}", "❌ Error reading input. Exiting application.".red());
             std::process::exit(1);
         }
     }
@@ -128,13 +128,13 @@ fn get_input(prompt: &str) -> String {
 
 fn get_multiline_input(prompt: &str) -> String {
     println!("{}", prompt.cyan());
-    println!("{}", "Digite 'FIM' em uma linha separada para finalizar:".dimmed());
+    println!("{}", "Type 'END' on a separate line to finish:".dimmed());
     
     let mut content = String::new();
     loop {
         let mut line = String::new();
         io::stdin().read_line(&mut line).unwrap();
-        if line.trim() == "FIM" {
+        if line.trim() == "END" {
             break;
         }
         content.push_str(&line);
@@ -143,38 +143,38 @@ fn get_multiline_input(prompt: &str) -> String {
 }
 
 fn display_menu() {
-    println!("\n{}", "Selecione uma opção:".green().bold());
-    println!("{}", "1. 📝 Adicionar nova entrada de contexto".white());
-    println!("{}", "2. 👀 Visualizar todas as entradas".white());
-    println!("{}", "3. 🔍 Buscar entradas".white());
-    println!("{}", "4. 🗑️  Limpar todas as entradas".white());
-    println!("{}", "5. 📊 Gerar resumo do contexto".white());
-    println!("{}", "6. 🚪 Sair".white());
+    println!("\n{}", "Select an option:".green().bold());
+    println!("{}", "1. 📝 Add new context entry".white());
+    println!("{}", "2. 👀 View all entries".white());
+    println!("{}", "3. 🔍 Search entries".white());
+    println!("{}", "4. 🗑️  Clear all entries".white());
+    println!("{}", "5. 📊 Generate context summary".white());
+    println!("{}", "6. 🚪 Exit".white());
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // Configurar handler para Ctrl+C
+    // Configure Ctrl+C handler
     ctrlc::set_handler(|| {
-        println!("\n{}", "👋 Aplicação interrompida pelo usuário. Saindo...".yellow());
+        println!("\n{}", "👋 Application interrupted by user. Exiting...".yellow());
         std::process::exit(0);
     })?;
 
     let mut context_window = ContextWindow::load().unwrap_or_else(|_| ContextWindow::new());
 
-    println!("{}", "🚀 IA Context Generator - Janela de Contexto".green().bold());
+    println!("{}", "🚀 AI Context Generator - Context Window".green().bold());
     println!("{}", "=".repeat(50).blue());
 
     loop {
         display_menu();
         
-        let choice = get_input("Digite sua escolha (1-6):");
+        let choice = get_input("Enter your choice (1-6):");
         
         match choice.as_str() {
             "1" => {
-                // Adicionar nova entrada
-                let title = get_input("Título da entrada:");
-                let content = get_multiline_input("📝 Digite o conteúdo da entrada:");
-                let tags_input = get_input("Tags (separadas por vírgula):");
+                // Add new entry
+                let title = get_input("Entry title:");
+                let content = get_multiline_input("📝 Enter the entry content:");
+                let tags_input = get_input("Tags (separated by comma):");
                 
                 let tags: Vec<String> = tags_input
                     .split(',')
@@ -184,21 +184,21 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
                 context_window.add_entry(title, content, tags);
                 context_window.save()?;
-                println!("{}", "✅ Entrada adicionada com sucesso!".green());
+                println!("{}", "✅ Entry added successfully!".green());
             }
             "2" => {
-                // Visualizar todas as entradas
+                // View all entries
                 context_window.display_entries();
             }
             "3" => {
-                // Buscar entradas
-                let query = get_input("Digite o termo de busca:");
+                // Search entries
+                let query = get_input("Enter search term:");
                 let results = context_window.search_entries(&query);
                 
                 if results.is_empty() {
-                    println!("{}", format!("❌ Nenhuma entrada encontrada para '{}'", query).red());
+                    println!("{}", format!("❌ No entries found for '{}'", query).red());
                 } else {
-                    println!("\n{}", format!("🔍 Resultados da busca para '{}':", query).green().bold());
+                    println!("\n{}", format!("🔍 Search results for '{}':", query).green().bold());
                     println!("{}", "=".repeat(60).blue());
                     for entry in results {
                         println!("\n{} {}", "📌".cyan(), entry.title.bold());
@@ -212,26 +212,26 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 }
             }
             "4" => {
-                // Limpar todas as entradas
-                let confirm = get_input("Tem certeza que deseja limpar todas as entradas? (s/N):");
-                if confirm.to_lowercase() == "s" || confirm.to_lowercase() == "sim" {
+                // Clear all entries
+                let confirm = get_input("Are you sure you want to clear all entries? (y/N):");
+                if confirm.to_lowercase() == "y" || confirm.to_lowercase() == "yes" {
                     context_window.clear_all();
                     context_window.save()?;
-                    println!("{}", "🗑️  Todas as entradas foram removidas!".yellow());
+                    println!("{}", "🗑️  All entries have been removed!".yellow());
                 } else {
-                    println!("{}", "❌ Operação cancelada.".red());
+                    println!("{}", "❌ Operation cancelled.".red());
                 }
             }
             "5" => {
-                // Gerar resumo do contexto
+                // Generate context summary
                 if context_window.entries.is_empty() {
-                    println!("{}", "📝 Nenhuma entrada para gerar resumo.".yellow());
+                    println!("{}", "📝 No entries to generate summary.".yellow());
                 } else {
-                    println!("\n{}", "📊 Resumo do Contexto:".green().bold());
+                    println!("\n{}", "📊 Context Summary:".green().bold());
                     println!("{}", "=".repeat(40).blue());
-                    println!("{} Total de entradas: {}", "📈".cyan(), context_window.entries.len().to_string().bold());
+                    println!("{} Total entries: {}", "📈".cyan(), context_window.entries.len().to_string().bold());
                     
-                    // Contar tags
+                    // Count tags
                     let mut tag_counts = std::collections::HashMap::new();
                     for entry in &context_window.entries {
                         for tag in &entry.tags {
@@ -240,29 +240,29 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     }
                     
                     if !tag_counts.is_empty() {
-                        println!("{} Tags mais usadas:", "🏷️".cyan());
+                        println!("{} Most used tags:", "🏷️".cyan());
                         let mut sorted_tags: Vec<_> = tag_counts.iter().collect();
                         sorted_tags.sort_by(|a, b| b.1.cmp(a.1));
                         for (tag, count) in sorted_tags.iter().take(5) {
-                            println!("   - {}: {} vezes", tag.purple(), count.to_string().bold());
+                            println!("   - {}: {} times", tag.purple(), count.to_string().bold());
                         }
                     }
                     
-                    // Entrada mais recente
+                    // Most recent entry
                     if let Some(latest) = context_window.entries.last() {
-                        println!("{} Entrada mais recente: {}", "📅".cyan(), latest.title.bold());
-                        println!("   Data: {}", latest.timestamp.format("%Y-%m-%d %H:%M:%S UTC").to_string().dimmed());
+                        println!("{} Most recent entry: {}", "📅".cyan(), latest.title.bold());
+                        println!("   Date: {}", latest.timestamp.format("%Y-%m-%d %H:%M:%S UTC").to_string().dimmed());
                     }
                 }
             }
             "6" => {
-                // Sair
-                println!("{}", "👋 Obrigado por usar o IA Context Generator!".green().bold());
-                println!("{}", "💾 Contexto salvo automaticamente.".dimmed());
+                // Exit
+                println!("{}", "👋 Thank you for using AI Context Generator!".green().bold());
+                println!("{}", "💾 Context saved automatically.".dimmed());
                 return Ok(());
             }
             _ => {
-                println!("{}", "❌ Opção inválida. Tente novamente.".red());
+                println!("{}", "❌ Invalid option. Please try again.".red());
             }
         }
 

@@ -1,102 +1,102 @@
-# IA Context Generator
+# AI Context Generator
 
-Uma ferramenta de linha de comando em Rust para criar e gerenciar uma janela de contexto que facilita as interações com IAs durante o desenvolvimento de projetos.
+A command-line tool in Rust for creating and managing a context window that facilitates AI interactions during project development.
 
-## 🚀 Funcionalidades
+## 🚀 Features
 
-- **📝 Adicionar Entradas**: Crie novas entradas de contexto com título, conteúdo e tags
-- **👀 Visualizar Entradas**: Exiba todas as entradas salvas com formatação colorida
-- **🔍 Buscar Entradas**: Pesquise por título, conteúdo ou tags
-- **🗑️ Limpar Entradas**: Remove todas as entradas do contexto
-- **📊 Resumo do Contexto**: Estatísticas sobre as entradas e tags mais usadas
-- **💾 Persistência**: Dados salvos automaticamente em `~/.ia-context-gen/context.json`
+- **📝 Add Entries**: Create new context entries with title, content, and tags
+- **👀 View Entries**: Display all saved entries with colored formatting
+- **🔍 Search Entries**: Search by title, content, or tags
+- **🗑️ Clear Entries**: Remove all entries from the context
+- **📊 Context Summary**: Statistics about entries and most used tags
+- **💾 Persistence**: Data automatically saved to `~/.ia-context-gen/context.json`
 
-## 📋 Pré-requisitos
+## 📋 Prerequisites
 
-- Rust 1.70 ou superior
+- Rust 1.70 or higher
 - Cargo
 
-## 🔧 Instalação
+## 🔧 Installation
 
-1. Clone o repositório:
+1. Clone the repository:
 ```bash
-git clone <url-do-repositorio>
+git clone <repository-url>
 cd ia-context-gen
 ```
 
-2. Instale usando o script de instalação:
+2. Install using the installation script:
 ```bash
 ./install.sh
 ```
 
-Ou compile manualmente:
+Or compile manually:
 ```bash
 cargo build --release
 ```
 
-3. Execute a aplicação:
+3. Run the application:
 ```bash
-# Se instalou com o script
+# If installed with the script
 ia-context-gen
 
-# Ou execute diretamente
+# Or run directly
 cargo run
 ```
 
-## 🛠️ Desenvolvimento
+## 🛠️ Development
 
-### Comandos úteis (via Makefile)
+### Useful commands (via Makefile)
 ```bash
-make dev        # Executar em modo desenvolvimento
-make release    # Compilar para release
-make test       # Executar testes
-make clean      # Limpar arquivos de build
-make fmt        # Formatar código
-make lint       # Verificar linting
-make install    # Instalar localmente
-make demo       # Executar demonstração
+make dev        # Run in development mode
+make release    # Compile for release
+make test       # Run tests
+make clean      # Clean build files
+make fmt        # Format code
+make lint       # Check linting
+make install    # Install locally
+make demo       # Run demonstration
 ```
 
-### Exemplo de contexto inicial
-O arquivo `example_context.json` contém exemplos de entradas que você pode usar como referência ou importar para testar a aplicação.
+### Initial context example
+The `example_context.json` file contains example entries that you can use as reference or import to test the application.
 
-## 📖 Como Usar
+## 📖 How to Use
 
-### Executar a aplicação
+### Run the application
 ```bash
 cargo run
 ```
 
-### Menu Principal
-A aplicação apresenta um menu interativo com as seguintes opções:
+### Main Menu
+The application presents an interactive menu with the following options:
 
-1. **📝 Adicionar nova entrada de contexto**
-   - Digite o título da entrada
-   - Digite o conteúdo (finalize com "FIM" em uma linha separada)
-   - Adicione tags separadas por vírgula
+1. **📝 Add new context entry**
+   - Enter the entry title
+   - Enter the content (finish with "END" on a separate line)
+   - Add tags separated by comma
 
-2. **👀 Visualizar todas as entradas**
-   - Mostra todas as entradas salvas
-   - Exibe apenas as primeiras 3 linhas do conteúdo
+2. **👀 View all entries**
+   - Shows all saved entries
+   - Displays only the first 3 lines of content
 
-3. **🔍 Buscar entradas**
-   - Pesquise por qualquer termo
-   - Busca em títulos, conteúdo e tags
+3. **🔍 Search entries**
+   - Search for any term
+   - Searches in titles, content, and tags
 
-4. **🗑️ Limpar todas as entradas**
-   - Remove todas as entradas (requer confirmação)
+4. **🗑️ Clear all entries**
+   - Removes all entries (requires confirmation)
 
-5. **📊 Gerar resumo do contexto**
-   - Mostra estatísticas do contexto
-   - Tags mais usadas
-   - Entrada mais recente
+5. **📊 Generate context summary**
+   - Shows context statistics
+   - Most used tags
+   - Most recent entry
 
-6. **🚪 Sair**
-   - Encerra a aplicação
+6. **🚪 Exit**
+   - Closes the application
 
-## 📁 Estrutura de Dados
+## 📁 Data Structure
 
-As entradas são armazenadas com a seguinte estrutura:
+Entries are stored with the following structure:
 
 ```rust
 struct ContextEntry {
@@ -107,79 +107,79 @@ struct ContextEntry {
 }
 ```
 
-## 🎯 Casos de Uso
+## 🎯 Use Cases
 
-### Para Desenvolvedores
-- Salvar trechos de código importantes
-- Documentar decisões de arquitetura
-- Manter registro de bugs e soluções
-- Criar templates de prompts para IAs
+### For Developers
+- Save important code snippets
+- Document architecture decisions
+- Keep record of bugs and solutions
+- Create AI prompt templates
 
-### Para Interações com IA
-- Manter contexto de conversas anteriores
-- Salvar prompts que funcionaram bem
-- Documentar resultados de experimentos
-- Criar base de conhecimento do projeto
+### For AI Interactions
+- Maintain context from previous conversations
+- Save prompts that worked well
+- Document experiment results
+- Create project knowledge base
 
-## 🔮 Exemplo de Uso
+## 🔮 Usage Example
 
 ```
-🚀 IA Context Generator - Janela de Contexto
+🚀 AI Context Generator - Context Window
 ==================================================
 
-Selecione uma opção:
-1. 📝 Adicionar nova entrada de contexto
-2. 👀 Visualizar todas as entradas
-3. 🔍 Buscar entradas
-4. 🗑️  Limpar todas as entradas
-5. 📊 Gerar resumo do contexto
-6. 🚪 Sair
+Select an option:
+1. 📝 Add new context entry
+2. 👀 View all entries
+3. 🔍 Search entries
+4. 🗑️  Clear all entries
+5. 📊 Generate context summary
+6. 🚪 Exit
 
-Digite sua escolha (1-6): 1
-Título da entrada: Configuração do Rust
-📝 Digite o conteúdo da entrada:
-Digite 'FIM' em uma linha separada para finalizar:
-Para configurar um novo projeto Rust:
-1. cargo new projeto
-2. cd projeto
+Enter your choice (1-6): 1
+Entry title: Rust Configuration
+📝 Enter the entry content:
+Type 'END' on a separate line to finish:
+To configure a new Rust project:
+1. cargo new project
+2. cd project
 3. cargo run
-FIM
-Tags (separadas por vírgula): rust, setup, cargo
-✅ Entrada adicionada com sucesso!
+END
+Tags (separated by comma): rust, setup, cargo
+✅ Entry added successfully!
 ```
 
-## 🛠️ Dependências
+## 🛠️ Dependencies
 
-- `serde` - Serialização/deserialização JSON
-- `chrono` - Manipulação de datas e horários
-- `dirs` - Obtenção de diretórios do sistema
-- `colored` - Colorização da saída no terminal
-- `crossterm` - Manipulação de terminal
+- `serde` - JSON serialization/deserialization
+- `chrono` - Date and time manipulation
+- `dirs` - System directory retrieval
+- `colored` - Terminal output coloring
+- `crossterm` - Terminal manipulation
 
-## 📝 Desenvolvimento
+## 📝 Development
 
-Este projeto foi desenvolvido especificamente para auxiliar no desenvolvimento de projetos, fornecendo uma maneira rápida e eficiente de manter contexto durante as interações com IAs.
+This project was developed specifically to assist in project development, providing a quick and efficient way to maintain context during AI interactions.
 
-### Compilar para release
+### Compile for release
 ```bash
 cargo build --release
 ```
 
-### Executar testes
+### Run tests
 ```bash
 cargo test
 ```
 
-## 🤝 Contribuição
+## 🤝 Contributing
 
-Contribuições são bem-vindas! Sinta-se à vontade para:
+Contributions are welcome! Feel free to:
 
-1. Fazer fork do projeto
-2. Criar uma branch para sua feature
-3. Fazer commit das mudanças
-4. Fazer push para a branch
-5. Abrir um Pull Request
+1. Fork the project
+2. Create a branch for your feature
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
 
-## 📄 Licença
+## 📄 License
 
-Este projeto está sob a licença MIT - veja o arquivo LICENSE para detalhes.
+This project is under the MIT license - see the LICENSE file for details.
