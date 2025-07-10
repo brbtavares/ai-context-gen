@@ -109,12 +109,10 @@ jobs:
         echo "EOF" >> $GITHUB_OUTPUT
     - name: Create Release
       id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ steps.get_version.outputs.VERSION }}
-        release_name: ${{ steps.get_version.outputs.VERSION }}
+        name: ${{ steps.get_version.outputs.VERSION }}
         body: |
           ## What's Changed
           
@@ -138,41 +136,17 @@ jobs:
           [dependencies]
           ai-context-gen = "${{ steps.get_version.outputs.VERSION }}"
           ```
+        files: |
+          ai-context-gen-linux-x86_64.tar.gz/ai-context-gen-linux-x86_64.tar.gz
+          ai-context-gen-linux-musl-x86_64.tar.gz/ai-context-gen-linux-musl-x86_64.tar.gz
+          ai-context-gen-linux-aarch64.tar.gz/ai-context-gen-linux-aarch64.tar.gz
         draft: false
         prerelease: false
-    
-    # Upload all binary assets
-    - name: Upload Linux x86_64 Binary
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./ai-context-gen-linux-x86_64.tar.gz/ai-context-gen-linux-x86_64.tar.gz
-        asset_name: ai-context-gen-linux-x86_64.tar.gz
-        asset_content_type: application/gzip
-    
-    - name: Upload Linux musl x86_64 Binary
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./ai-context-gen-linux-musl-x86_64.tar.gz/ai-context-gen-linux-musl-x86_64.tar.gz
-        asset_name: ai-context-gen-linux-musl-x86_64.tar.gz
-        asset_content_type: application/gzip
-    
-    - name: Upload Linux aarch64 Binary
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./ai-context-gen-linux-aarch64.tar.gz/ai-context-gen-linux-aarch64.tar.gz
-        asset_name: ai-context-gen-linux-aarch64.tar.gz
-        asset_content_type: application/gzip
 
   # Publish to crates.io
+  # Note: CRATES_IO_TOKEN secret must be configured in GitHub repository settings
+  # Go to: Settings > Secrets and variables > Actions > New repository secret
+  # Name: CRATES_IO_TOKEN, Value: your crates.io API token
   publish:
     name: Publish to crates.io
     needs: [test, build]
