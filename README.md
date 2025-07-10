@@ -1,6 +1,10 @@
 # AI Context Generator
 
-[![Crates.io](https://img.shields.io/crates/v/ai-context-gen.svg)](https://crates.io/crates/ai-context-gen)
+[![Crates.i```toml
+# Cargo.toml
+[dependencies]
+ai-context-gen = "0.1.2"
+```tps://img.shields.io/crates/v/ai-context-gen.svg)](https://crates.io/crates/ai-context-gen)
 [![Documentation](https://docs.rs/ai-context-gen/badge.svg)](https://docs.rs/ai-context-gen)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE-MIT)
 [![Rust](https://img.shields.io/badge/rust-1.70+-blue.svg)](https://www.rust-lang.org)
@@ -175,7 +179,7 @@ Add to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-ai-context-gen = "0.1.1"
+ai-context-gen = "0.1.2"
 ```
 
 ### Library Examples
@@ -400,6 +404,14 @@ This project is licensed under the MIT license. See the `LICENSE` file for detai
 - [ ] Cache for better performance
 
 ## 📝 Changelog
+
+### v0.1.2
+
+- 🔧 **MSRV Compatibility**: Updated MSRV to Rust 1.76 to support Cargo lock file version 4
+- 🚀 **Workflow Improvements**: Modernized GitHub Actions workflows with updated actions
+- 🛠️ **CI Fixes**: Fixed MSRV check to handle newer lock file formats correctly
+- 📦 **Release Automation**: Enhanced release workflow with better asset handling
+- 🔒 **Better Error Handling**: Improved release workflow with proper secret handling
 
 ### v0.1.1
 
