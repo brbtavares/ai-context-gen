@@ -1,13 +1,9 @@
 # AI Context Generator
 
-[![Crates.i```toml
-# Cargo.toml
-[dependencies]
-ai-context-gen = "0.1.2"
-```tps://img.shields.io/crates/v/ai-context-gen.svg)](https://crates.io/crates/ai-context-gen)
+[![Crates.io](https://img.shields.io/crates/v/ai-context-gen.svg)](https://crates.io/crates/ai-context-gen)
 [![Documentation](https://docs.rs/ai-context-gen/badge.svg)](https://docs.rs/ai-context-gen)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE-MIT)
-[![Rust](https://img.shields.io/badge/rust-1.70+-blue.svg)](https://www.rust-lang.org)
+[![Rust](https://img.shields.io/badge/rust-1.76+-blue.svg)](https://www.rust-lang.org)
 [![Build Status](https://github.com/brbtavares/ai-context-gen/workflows/CI/badge.svg)](https://github.com/brbtavares/ai-context-gen/actions)
 [![Downloads](https://img.shields.io/crates/d/ai-context-gen.svg)](https://crates.io/crates/ai-context-gen)
 
@@ -40,7 +36,7 @@ ai-context-gen --path /path/to/project
 ```toml
 # Cargo.toml
 [dependencies]
-ai-context-gen = "0.1.1"
+ai-context-gen = "0.1.2"
 ```
 
 ```rust
