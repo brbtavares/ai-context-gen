@@ -69,7 +69,7 @@ The AI Context Generator CLI is perfect for interactive use, one-time analysis, 
 
 #### Prerequisites
 
-- Rust 1.70 or higher
+- Rust 1.76 or higher
 - Linux system (tested on Ubuntu/Debian)
 
 #### Build and Install

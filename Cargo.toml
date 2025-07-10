@@ -2,6 +2,7 @@
 name = "ai-context-gen"
 version = "0.1.1"
 edition = "2021"
+rust-version = "1.76"
 authors = ["Bruno Tavares <brbtavares@outlook.com>"]
 description = "A context generator for Rust repositories that creates structured markdown files with relevant information for LLMs and AI agents"
 readme = "README.md"

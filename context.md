@@ -1,5 +1,65 @@
 # AI Context Generation Report
 
+Generated on: 2025-07-10 12:51:40 UTC
+Repository: .
+Max tokens: 50000
+
+## Table of Contents
+
+1. Project Metadata
+2. Project Structure
+3. Documentation: context.md (truncated)
+
+---
+
+# Project Metadata
+
+**Name:** ai-context-gen
+**Description:** [![Crates.io](https://img.shields.io/crates/v/ai-context-gen.svg)](https://crates.io/crates/ai-context-gen)
+[![Documentation](https://docs.rs/ai-context-gen/badge.svg)](https://docs.rs/ai-context-gen)
+**Dependencies:**
+- clap
+- walkdir
+- serde
+- serde_json
+- syn
+- quote
+- proc-macro2
+- tiktoken-rs
+- anyhow
+- regex
+- chrono
+- version
+- features
+**Version:** 0.1.1
+**Total files:** 12
+**Total size:** 317664 bytes
+
+---
+
+# Project Structure
+
+```
+├── README.md
+├── RELEASE.md
+├── context.md
+│   ├── examples/advanced_usage.rs
+│   ├── examples/basic_usage.rs
+│   ├── src/config.rs
+│   ├── src/generator.rs
+│   ├── src/lib.rs
+│   ├── src/main.rs
+│   ├── src/parser.rs
+│   ├── src/scanner.rs
+│   └── src/token_counter.rs
+```
+
+---
+
+# Documentation: context.md
+
+# AI Context Generation Report
+
 Generated on: 2025-07-10 12:38:21 UTC
 Repository: .
 Max tokens: 50000
@@ -7970,57 +8030,4 @@ impl RepositoryScanner {
         let readme_path = self.config.repo_path.join("README.md");
 
         let mut metadata = ProjectMetadata {
-            name: self
-                .config
-                .repo_path
-                .file_name()
-                .unwrap_or_default()
-                .to_string_lossy()
-                .to_string(),
-            description: None,
-            dependencies: Vec::new(),
-            rust_version: None,
-        };
-
-        // Extract information from Cargo.toml
-        if cargo_toml_path.exists() {
-            let cargo_content = fs::read_to_string(&cargo_toml_path)?;
-            self.parse_cargo_toml(&cargo_content, &mut metadata)?;
-        }
-
-        // Extract description from README.md
-        if readme_path.exists() {
-            let readme_content = fs::read_to_string(&readme_path)?;
-            metadata.description = self.extract_description_from_readme(&readme_content);
-        }
-
-        Ok(metadata)
-    }
-
-    fn parse_cargo_toml(&self, content: &str, metadata: &mut ProjectMetadata) -> Result<()> {
-        let lines: Vec<&str> = content.lines().collect();
-        let mut in_package = false;
-        let mut in_dependencies = false;
-
-        for line in lines {
-            let line = line.trim();
-
-            if line.starts_with("[package]") {
-                in_package = true;
-                in_dependencies = false;
-                continue;
-            }
-
-            if line.starts_with("[dependencies") {
-                in_package = false;
-                in_dependencies = true;
-                continue;
-            }
-
-            if line.starts_with("[") {
-                in_package = false;
-                in_dependencies = false;
-                continue;
-            }
-
-            if in_package
+            name
