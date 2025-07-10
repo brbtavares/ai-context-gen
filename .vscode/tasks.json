@@ -2,7 +2,7 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Run IA Context Generator",
+			"label": "🚀 Run AI Context Generator",
 			"type": "shell",
 			"command": "cargo",
 			"args": [
@@ -12,7 +12,176 @@
 			"isBackground": false,
 			"problemMatcher": [
 				"$rustc"
-			]
+			],
+			"detail": "Run the AI Context Generator with default settings"
+		},
+		{
+			"label": "🔨 Build Release",
+			"type": "shell",
+			"command": "cargo",
+			"args": [
+				"build",
+				"--release"
+			],
+			"group": "build",
+			"isBackground": false,
+			"problemMatcher": [
+				"$rustc"
+			],
+			"detail": "Build the project in release mode for production"
+		},
+		{
+			"label": "🧪 Run Tests",
+			"type": "shell",
+			"command": "cargo",
+			"args": [
+				"test"
+			],
+			"group": "test",
+			"isBackground": false,
+			"problemMatcher": [
+				"$rustc"
+			],
+			"detail": "Run all unit tests and documentation tests"
+		},
+		{
+			"label": "📚 Generate Documentation",
+			"type": "shell",
+			"command": "cargo",
+			"args": [
+				"doc",
+				"--no-deps",
+				"--open"
+			],
+			"group": "build",
+			"isBackground": false,
+			"problemMatcher": [
+				"$rustc"
+			],
+			"detail": "Generate and open project documentation"
+		},
+		{
+			"label": "🔍 Check Code",
+			"type": "shell",
+			"command": "cargo",
+			"args": [
+				"check"
+			],
+			"group": "build",
+			"isBackground": false,
+			"problemMatcher": [
+				"$rustc"
+			],
+			"detail": "Fast compile check without building binaries"
+		},
+		{
+			"label": "🎯 Run with Custom Args",
+			"type": "shell",
+			"command": "cargo",
+			"args": [
+				"run",
+				"--",
+				"--path",
+				"src",
+				"--output",
+				"context_output.md",
+				"--max-tokens",
+				"20000"
+			],
+			"group": "build",
+			"isBackground": false,
+			"problemMatcher": [
+				"$rustc"
+			],
+			"detail": "Run AI Context Generator with example arguments"
+		},
+		{
+			"label": "📖 Run Basic Example",
+			"type": "shell",
+			"command": "cargo",
+			"args": [
+				"run",
+				"--example",
+				"basic_usage"
+			],
+			"group": "build",
+			"isBackground": false,
+			"problemMatcher": [
+				"$rustc"
+			],
+			"detail": "Run the basic usage example"
+		},
+		{
+			"label": "⚡ Run Advanced Example",
+			"type": "shell",
+			"command": "cargo",
+			"args": [
+				"run",
+				"--example",
+				"advanced_usage"
+			],
+			"group": "build",
+			"isBackground": false,
+			"problemMatcher": [
+				"$rustc"
+			],
+			"detail": "Run the advanced usage example"
+		},
+		{
+			"label": "🔧 Clippy Lint",
+			"type": "shell",
+			"command": "cargo",
+			"args": [
+				"clippy",
+				"--all-targets",
+				"--",
+				"-D",
+				"warnings"
+			],
+			"group": "build",
+			"isBackground": false,
+			"problemMatcher": [
+				"$rustc"
+			],
+			"detail": "Run Clippy linter with strict warnings"
+		},
+		{
+			"label": "🎨 Format Code",
+			"type": "shell",
+			"command": "cargo",
+			"args": [
+				"fmt"
+			],
+			"group": "build",
+			"isBackground": false,
+			"detail": "Format all Rust code using rustfmt"
+		},
+		{
+			"label": "🚢 Publish Dry Run",
+			"type": "shell",
+			"command": "cargo",
+			"args": [
+				"publish",
+				"--dry-run",
+				"--allow-dirty"
+			],
+			"group": "build",
+			"isBackground": false,
+			"problemMatcher": [
+				"$rustc"
+			],
+			"detail": "Test crate publishing without actually publishing"
+		},
+		{
+			"label": "🧹 Clean Build",
+			"type": "shell",
+			"command": "cargo",
+			"args": [
+				"clean"
+			],
+			"group": "build",
+			"isBackground": false,
+			"detail": "Clean all build artifacts"
 		}
 	]
 }

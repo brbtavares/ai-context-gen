@@ -1,2 +1,65 @@
-/target
+# Rust build artifacts
+/target/
+**/*.rs.bk
+*.pdb
+
+# IDE files
+.vscode/settings.json
+.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Generated documentation
+/doc/
+
+# Test artifacts
+*.profraw
+
+# Backup files
+*.bak
+*.backup
+*.tmp
+
+# Log files
+*.log
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Generated context files (project specific)
 ai-context.json
+repo_context.md
+context_output.md
+*_context.md
+example_context.md
+advanced_context.md
+
+# Temporary files
+temp/
+tmp/
+
+# Coverage reports
+/coverage/
+*.lcov
+*.gcno
+*.gcda
+
+# Flamegraph
+flamegraph.svg
+perf.data*
+
+# Benchmarking
+criterion/

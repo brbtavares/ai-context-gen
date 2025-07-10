@@ -1,227 +1,343 @@
 # AI Context Generator
 
-A command-line tool in Rust for creating and managing a context window that facilitates AI interactions during project development.
+[![Crates.io](https://img.shields.io/crates/v/ai-context-gen.svg)](https://crates.io/crates/ai-context-gen)
+[![Documentation](https://docs.rs/ai-context-gen/badge.svg)](https://docs.rs/ai-context-gen)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE-MIT)
+[![Rust](https://img.shields.io/badge/rust-1.70+-blue.svg)](https://www.rust-lang.org)
+[![Build Status](https://github.com/brbtavares/ai-context-gen/workflows/CI/badge.svg)](https://github.com/brbtavares/ai-context-gen/actions)
+[![Downloads](https://img.shields.io/crates/d/ai-context-gen.svg)](https://crates.io/crates/ai-context-gen)
 
-## 🚀 Features
+A context generator for Rust repositories that creates a structured markdown file with relevant information for LLMs and AI agents.
 
-- **📝 Add Entries**: Create new context entries with title, content, and tags
-- **👀 View Entries**: Display all saved entries with colored formatting
-- **🔍 Search Entries**: Search by title, content, or tags
-- **🗑️ Clear Entries**: Remove all entries from the context
-- **📊 Context Summary**: Statistics about entries and most used tags
-- **🤖 Auto-scan Project**: Automatically scan and create context from project files
-- **💾 Persistence**: Data automatically saved to `~/.ia-context-gen/context.json`
+Available as:
 
-## 📋 Prerequisites
+- 🔧 **CLI Tool**: Use directly from command line
+- 📚 **Rust Library**: Integrate into your Rust application
+
+## Features
+
+- 🔍 **Complete Scanning**: Analyzes all `.rs` and `.md` files in the repository
+- 🌳 **Abstract Syntax Tree**: Extracts and documents structures, functions, enums and implementations
+- 📊 **Token Control**: Respects token limits and prioritizes important content
+- 📁 **Project Structure**: Generates file tree visualization
+- 📖 **Documentation**: Includes markdown files like README, documentation, etc.
+- ⚡ **Performance**: Asynchronous and optimized processing
+
+## Installation
+
+### Prerequisites
 
 - Rust 1.70 or higher
-- Cargo
+- Linux system (tested on Ubuntu/Debian)
 
-## 🔧 Installation
+### Build
 
-1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd ia-context-gen
+# Clone the repository
+git clone <repo-url>
+cd ai-context-gen
+
+# Option 1: Using make (recommended)
+make build
+
+# Option 2: Using the script directly
+chmod +x build.sh
+./build.sh
+
+# Option 3: Using cargo directly
+make release
 ```
 
-2. Install using the installation script:
+### Global Installation
+
 ```bash
+# Using make (recommended)
+make install
+
+# Or using the installation script
 ./install.sh
+
+# Or manually
+sudo cp target/release/ai-context-gen /usr/local/bin/
 ```
 
-Or compile manually:
+### Available Make Commands
+
 ```bash
-cargo build --release
+# Development
+make dev          # Build and run in development mode
+make demo         # Run demo with current directory
+make help         # Show application help
+
+# Build
+make build        # Build using script (recommended)
+make release      # Optimized build for release
+
+# Code quality
+make test         # Run tests
+make check        # Run format, lint and tests
+make fmt          # Check formatting
+make lint         # Check linting
+
+# Installation
+make install      # Install on system
+make uninstall    # Remove from system
+
+# Utilities
+make clean        # Clean build artifacts
+make info         # Show project information
+make help-make    # Show all make commands
 ```
 
-3. Run the application:
+## Usage
+
+### CLI Usage
+
+#### Basic Usage
+
 ```bash
-# If installed with the script
-ia-context-gen
+# Analyze current directory
+ai-context-gen
 
-# Or run directly
-cargo run
+# Analyze a specific directory
+ai-context-gen --path /path/to/project
+
+# Specify token limit
+ai-context-gen --max-tokens 100000
+
+# Specify output file name
+ai-context-gen --output project_context.md
 ```
 
-## 🛠️ Development
+#### Available Options
 
-### Useful commands (via Makefile)
 ```bash
-make dev        # Run in development mode
-make release    # Compile for release
-make test       # Run tests
-make clean      # Clean build files
-make fmt        # Format code
-make lint       # Check linting
-make install    # Install locally
-make demo       # Run demonstration
+ai-context-gen --help
 ```
 
-### Initial context example
-The `example_context.json` file contains example entries that you can use as reference or import to test the application.
+**Options:**
 
-## 📖 How to Use
+- `-p, --path <PATH>`: Path to repository (default: current directory)
+- `-m, --max-tokens <MAX_TOKENS>`: Maximum number of tokens (default: 50000)
+- `-o, --output <OUTPUT>`: Output file name (default: repo_context.md)
+- `--include-hidden`: Include hidden files and directories
+- `--include-deps`: Include external dependencies analysis
 
-### Run the application
+#### Examples
+
 ```bash
-cargo run
+# Complete analysis with high token limit
+ai-context-gen --max-tokens 200000 --output complete_context.md
+
+# Analysis including hidden files
+ai-context-gen --include-hidden --path ~/my-project
+
+# Quick analysis with low limit
+ai-context-gen --max-tokens 10000 --output summary.md
+
+# Using make for development
+make demo
+
+# Running tests
+make test
 ```
 
-### Main Menu
-The application presents an interactive menu with the following options:
+### Rust Library Usage
 
-1. **📝 Add new context entry**
-   - Enter the entry title
-   - Enter the content (finish with "END" on a separate line)
-   - Add tags separated by comma
+Add to your `Cargo.toml`:
 
-2. **👀 View all entries**
-   - Shows all saved entries
-   - Displays only the first 3 lines of content
+```toml
+[dependencies]
+ai-context-gen = "0.1.0"
+```
 
-3. **🔍 Search entries**
-   - Search for any term
-   - Searches in titles, content, and tags
-
-4. **🗑️ Clear all entries**
-   - Removes all entries (requires confirmation)
-
-5. **📊 Generate context summary**
-   - Shows context statistics
-   - Most used tags
-   - Most recent entry
-
-6. **🤖 Auto-scan project (create context from scratch)**
-   - Automatically scan project files and create context entries
-   - Detects project type and generates comprehensive overview
-   - Processes source code, configuration, and documentation files
-   - Creates intelligent tags based on file types and locations
-
-7. **🚪 Exit**
-   - Closes the application
-
-## 📁 Data Structure
-
-Entries are stored with the following structure:
+#### Basic Example
 
 ```rust
-struct ContextEntry {
-    timestamp: DateTime<Utc>,
-    title: String,
-    content: String,
-    tags: Vec<String>,
+use ai_context_gen::generate_context;
+use std::path::PathBuf;
+
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
+    // Generate context for current directory
+    generate_context(PathBuf::from("."), "context.md".to_string()).await?;
+    println!("Context generated in context.md");
+    Ok(())
 }
 ```
 
-## 🎯 Use Cases
+#### Advanced Example
+
+```rust
+use ai_context_gen::{Config, ContextGenerator, RepositoryScanner};
+use std::path::PathBuf;
+
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
+    // Custom configuration
+    let config = Config {
+        repo_path: PathBuf::from("./my-project"),
+        max_tokens: 100000,
+        output_file: "detailed_context.md".to_string(),
+        include_hidden: true,
+        include_deps: true,
+    };
+
+    // Two-step process
+    let scanner = RepositoryScanner::new(config.clone());
+    let scan_result = scanner.scan().await?;
+    
+    println!("Files found: {}", scan_result.files.len());
+    
+    let generator = ContextGenerator::new(config);
+    generator.generate_context(scan_result).await?;
+    
+    println!("Context generated successfully!");
+    Ok(())
+}
+```
+
+#### Available API
+
+- **`generate_context(path, output)`**: Simple function for basic cases
+- **`generate_context_with_config(config)`**: Function with custom configuration
+- **`Config`**: Configuration structure
+- **`RepositoryScanner`**: File scanning
+- **`ContextGenerator`**: Context generation
+- **`RustParser`**: Rust code parser
+
+## Generated File Structure
+
+The generated file contains the following sections (in priority order):
+
+### 1. Project Metadata (High Priority)
+
+- Project name and description
+- Rust version
+- Main dependencies
+- Project statistics
+
+### 2. Project Structure (High Priority)
+
+- File tree
+- Directory organization
+
+### 3. Markdown Documentation (High Priority)
+
+- README.md
+- Other .md files found
+- Project documentation
+
+### 4. Rust AST Analysis (Medium Priority)
+
+- Structures (structs)
+- Enumerations (enums)
+- Functions
+- Implementations (impls)
+- Modules
+- Code documentation
+
+### 5. Source Code (Low Priority)
+
+- Complete content of .rs files
+- Syntax highlighting for markdown
+
+## Prioritization Algorithm
+
+The system uses an intelligent prioritization algorithm:
+
+1. **High Priority (9)**: Metadata, structure and documentation
+2. **Medium Priority (5)**: AST analysis and code architecture
+3. **Low Priority (1)**: Complete source code
+
+When the token limit is reached, the system:
+
+- Includes high priority sections first
+- Truncates low priority sections if necessary
+- Reports which sections were truncated
+
+## Ignored Files
+
+The system automatically ignores:
+
+**Directories:**
+
+- `target/`
+- `node_modules/`
+- `.git/`
+- `.vscode/`
+- `.idea/`
+
+**Files:**
+
+- `Cargo.lock`
+- `.gitignore`
+- `.DS_Store`
+
+## Token Counting
+
+Uses the GPT-4 tokenizer for precise token counting, ensuring compatibility with:
+
+- OpenAI GPT-4
+- Claude
+- Other models based on similar tokens
+
+## Use Cases
 
 ### For Developers
-- Save important code snippets
-- Document architecture decisions
-- Keep record of bugs and solutions
-- Create AI prompt templates
 
-### For AI Interactions
-- Maintain context from previous conversations
-- Save prompts that worked well
-- Document experiment results
-- Create project knowledge base
+- Automatic project documentation
+- Onboarding new team members
+- Code architecture analysis
 
-## 🤖 Auto-scan Feature
+### For LLMs/AI
 
-The auto-scan feature (option 6) automatically analyzes your project and creates comprehensive context entries:
+- Structured context for code assistants
+- Analysis of existing projects
+- Documentation generation
+- Automated code review
 
-### Supported File Types
-- **Source Code**: `.rs`, `.py`, `.js`, `.ts`, `.jsx`, `.tsx`, `.java`, `.cpp`, `.go`, `.php`, `.rb`, etc.
-- **Web Files**: `.html`, `.css`, `.scss`, `.vue`, `.svelte`
-- **Configuration**: `.json`, `.yaml`, `.toml`, `.xml`, `.ini`
-- **Documentation**: `.md`, `.txt`, `.rst`
-- **Scripts**: `.sh`, `.bat`, `Dockerfile`, `Makefile`
+### For Documentation
 
-### Automatic Project Detection
-- **Rust**: Detects `Cargo.toml`, analyzes dependencies
-- **JavaScript/Node.js**: Detects `package.json`, analyzes scripts and dependencies
-- **Python**: Detects `requirements.txt`, `setup.py`, `pyproject.toml`
-- **Java**: Detects `pom.xml` (Maven) or `build.gradle` (Gradle)
-- **Go**: Detects `go.mod`
-- **PHP**: Detects `composer.json`
-- **Ruby**: Detects `Gemfile`
+- Project wiki generation
+- Architecture reports
+- Technical documentation
 
-### Intelligent Tagging
-Files are automatically tagged based on:
-- File extension (language)
-- Directory structure (`src/`, `test/`, `config/`, etc.)
-- File purpose (components, utilities, services, etc.)
-- Project type and framework detection
+## Limitations
 
-## 🔮 Usage Example
+- Supports only Rust projects
+- Analyzes only `.rs` and `.md` files
+- Requires Linux system for execution
+- Token limit may truncate content
 
-```
-🚀 AI Context Generator - Context Window
-==================================================
+## Contributing
 
-Select an option:
-1. 📝 Add new context entry
-2. 👀 View all entries
-3. 🔍 Search entries
-4. 🗑️  Clear all entries
-5. 📊 Generate context summary
-6. 🤖 Auto-scan project (create context from scratch)
-7. 🚪 Exit
-
-Enter your choice (1-7): 6
-Enter project path (default: current directory): 
-⚠️ This will replace all existing context entries.
-Continue? (y/N): y
-🚀 Starting project scan...
-🔍 Scanning project files...
-📄 Processed 10 files...
-📄 Processed 20 files...
-
-✅ Project scan completed successfully!
-📊 25 files processed
-💾 Context saved to: /home/user/.ia-context-gen/context.json
-
-📋 Context entries created:
-  • Project overview
-  • 25 source files
-
-💡 Use option 2 to view all entries or option 3 to search!
-```
-
-## 🛠️ Dependencies
-
-- `serde` - JSON serialization/deserialization
-- `chrono` - Date and time manipulation
-- `dirs` - System directory retrieval
-- `colored` - Terminal output coloring
-- `crossterm` - Terminal manipulation
-
-## 📝 Development
-
-This project was developed specifically to assist in project development, providing a quick and efficient way to maintain context during AI interactions.
-
-### Compile for release
-```bash
-cargo build --release
-```
-
-### Run tests
-```bash
-cargo test
-```
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to:
+Contributions are welcome! Please:
 
 1. Fork the project
 2. Create a branch for your feature
-3. Commit your changes
-4. Push to the branch
+3. Implement your changes
+4. Add tests if necessary
 5. Open a Pull Request
 
-## 📄 License
+## License
 
-This project is under the MIT license - see the LICENSE file for details.
+This project is licensed under the MIT license. See the `LICENSE` file for details.
+
+## Roadmap
+
+- [ ] Web interface
+- [ ] Git integration
+- [ ] Commit history analysis
+- [ ] Support for other output formats (JSON, YAML)
+- [ ] Cache for better performance
+
+## Changelog
+
+### v0.1.0
+
+- Initial implementation
+- Support for Rust AST analysis
+- Content prioritization system
+- Token counting with tiktoken
+- Structured markdown file generation
