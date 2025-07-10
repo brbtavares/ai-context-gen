@@ -1,0 +1,31 @@
+name: Version Check
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  version-check:
+    name: Verify Version Consistency
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Get tag version
+      id: tag_version
+      run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+    - name: Get Cargo.toml version
+      id: cargo_version
+      run: |
+        CARGO_VERSION=$(grep "^version" Cargo.toml | head -1 | sed 's/version = "\(.*\)"/\1/')
+        echo "VERSION=$CARGO_VERSION" >> $GITHUB_OUTPUT
+    - name: Compare versions
+      run: |
+        if [ "${{ steps.tag_version.outputs.VERSION }}" != "${{ steps.cargo_version.outputs.VERSION }}" ]; then
+          echo "❌ Version mismatch!"
+          echo "Tag version: ${{ steps.tag_version.outputs.VERSION }}"
+          echo "Cargo.toml version: ${{ steps.cargo_version.outputs.VERSION }}"
+          exit 1
+        else
+          echo "✅ Versions match: ${{ steps.tag_version.outputs.VERSION }}"
+        fi
