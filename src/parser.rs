@@ -7,7 +7,7 @@
 use anyhow::Result;
 use quote::ToTokens;
 use serde::{Deserialize, Serialize};
-use syn::{Item, ItemEnum, ItemFn, ItemImpl, ItemMod, ItemStruct, Signature, parse_file};
+use syn::{parse_file, Item, ItemEnum, ItemFn, ItemImpl, ItemMod, ItemStruct, Signature};
 
 /// Complete analysis result for a single Rust source file.
 ///
@@ -17,22 +17,22 @@ use syn::{Item, ItemEnum, ItemFn, ItemImpl, ItemMod, ItemStruct, Signature, pars
 pub struct RustAnalysis {
     /// Path to the analyzed file.
     pub file_path: String,
-    
+
     /// List of modules defined in the file.
     pub modules: Vec<ModuleInfo>,
-    
+
     /// List of functions defined in the file.
     pub functions: Vec<FunctionInfo>,
-    
+
     /// List of structs defined in the file.
     pub structs: Vec<StructInfo>,
-    
+
     /// List of enums defined in the file.
     pub enums: Vec<EnumInfo>,
-    
+
     /// List of impl blocks defined in the file.
     pub implementations: Vec<ImplInfo>,
-    
+
     /// Summary of the AST structure.
     pub ast_summary: String,
 }
@@ -42,10 +42,10 @@ pub struct RustAnalysis {
 pub struct ModuleInfo {
     /// Name of the module.
     pub name: String,
-    
+
     /// Visibility modifier (pub, pub(crate), private, etc.).
     pub visibility: String,
-    
+
     /// Number of items contained in the module.
     pub items_count: usize,
 }
@@ -55,19 +55,19 @@ pub struct ModuleInfo {
 pub struct FunctionInfo {
     /// Name of the function.
     pub name: String,
-    
+
     /// Visibility modifier (pub, pub(crate), private, etc.).
     pub visibility: String,
-    
+
     /// Whether the function is async.
     pub is_async: bool,
-    
+
     /// List of parameter types as strings.
     pub parameters: Vec<String>,
-    
+
     /// Return type as a string, if any.
     pub return_type: Option<String>,
-    
+
     /// Documentation comment, if present.
     pub documentation: Option<String>,
 }
@@ -77,13 +77,13 @@ pub struct FunctionInfo {
 pub struct StructInfo {
     /// Name of the struct.
     pub name: String,
-    
+
     /// Visibility modifier (pub, pub(crate), private, etc.).
     pub visibility: String,
-    
+
     /// List of fields in the struct.
     pub fields: Vec<FieldInfo>,
-    
+
     /// Documentation comment, if present.
     pub documentation: Option<String>,
 }
@@ -93,10 +93,10 @@ pub struct StructInfo {
 pub struct FieldInfo {
     /// Name of the field.
     pub name: String,
-    
+
     /// Type of the field as a string.
     pub field_type: String,
-    
+
     /// Visibility modifier for the field.
     pub visibility: String,
 }
@@ -106,13 +106,13 @@ pub struct FieldInfo {
 pub struct EnumInfo {
     /// Name of the enum.
     pub name: String,
-    
+
     /// Visibility modifier (pub, pub(crate), private, etc.).
     pub visibility: String,
-    
+
     /// List of variant names.
     pub variants: Vec<String>,
-    
+
     /// Documentation comment, if present.
     pub documentation: Option<String>,
 }
@@ -122,10 +122,10 @@ pub struct EnumInfo {
 pub struct ImplInfo {
     /// The type being implemented (e.g., "MyStruct", "Vec<T>").
     pub target: String,
-    
+
     /// Name of the trait being implemented, if this is a trait impl.
     pub trait_name: Option<String>,
-    
+
     /// List of methods defined in the implementation.
     pub methods: Vec<FunctionInfo>,
 }

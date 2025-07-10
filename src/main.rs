@@ -15,35 +15,35 @@ use ai_context_gen::{Config, ContextGenerator, RepositoryScanner};
 #[command(author, version, about, long_about = None)]
 struct Args {
     /// Path to the repository to analyze
-    /// 
+    ///
     /// Specifies the root directory of the project to scan. The tool will
     /// recursively process all supported files within this directory.
     #[arg(short, long, default_value = ".")]
     path: PathBuf,
 
     /// Maximum number of tokens to include in the output
-    /// 
+    ///
     /// Controls the size of the generated context to fit within LLM token limits.
     /// Content is prioritized and truncated as needed to stay within this limit.
     #[arg(short, long, default_value = "50000")]
     max_tokens: usize,
 
     /// Output file name for the generated context
-    /// 
+    ///
     /// The markdown file where the generated context will be written.
     /// If the file exists, it will be overwritten.
     #[arg(short, long, default_value = "repo_context.md")]
     output: String,
 
     /// Include hidden files and directories in the analysis
-    /// 
+    ///
     /// When enabled, files and directories starting with '.' will be included
     /// in the scan (except for those in the ignore list).
     #[arg(long)]
     include_hidden: bool,
 
     /// Include analysis of external dependencies
-    /// 
+    ///
     /// When enabled, the tool will attempt to analyze and include information
     /// about external dependencies from Cargo.toml.
     #[arg(long)]

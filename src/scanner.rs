@@ -19,21 +19,21 @@ use crate::config::{Config, IGNORED_DIRS, IGNORED_FILES, SUPPORTED_EXTENSIONS};
 pub struct FileInfo {
     /// Absolute path to the file on the filesystem.
     pub path: PathBuf,
-    
+
     /// Path relative to the repository root.
-    /// 
+    ///
     /// This is used for display purposes in the generated context.
     pub relative_path: PathBuf,
-    
+
     /// Complete content of the file as a string.
     ///
     /// For text files, this contains the entire file content.
     /// Binary files are not processed and won't appear in scan results.
     pub content: String,
-    
+
     /// Type classification of the file based on its extension.
     pub file_type: FileType,
-    
+
     /// Size of the file in bytes.
     pub size: u64,
 }
@@ -49,7 +49,7 @@ pub enum FileType {
     /// These files receive full AST analysis to extract structural information
     /// about modules, functions, structs, enums, and implementations.
     Rust,
-    
+
     /// Markdown documentation files (`.md` extension).
     ///
     /// These files are included as high-priority documentation content.
@@ -66,10 +66,10 @@ pub struct ScanResult {
     ///
     /// Only files with supported extensions that passed filtering are included.
     pub files: Vec<FileInfo>,
-    
+
     /// Structural information about the project organization.
     pub project_structure: ProjectStructure,
-    
+
     /// Metadata extracted from project configuration files.
     pub metadata: ProjectMetadata,
 }
@@ -82,10 +82,10 @@ pub struct ProjectStructure {
     /// This is formatted as a text-based tree structure suitable for
     /// inclusion in markdown documentation.
     pub tree: String,
-    
+
     /// Total number of files that were processed.
     pub total_files: usize,
-    
+
     /// Combined size of all processed files in bytes.
     pub total_size: u64,
 }
@@ -98,17 +98,17 @@ pub struct ProjectMetadata {
     /// Extracted from `Cargo.toml` if available, otherwise derived from
     /// the repository directory name.
     pub name: String,
-    
+
     /// Project description, if available.
     ///
     /// Extracted from `Cargo.toml` description field or README.md content.
     pub description: Option<String>,
-    
+
     /// List of main dependencies.
     ///
     /// Extracted from the `[dependencies]` section of `Cargo.toml`.
     pub dependencies: Vec<String>,
-    
+
     /// Rust version or project version.
     ///
     /// Extracted from `Cargo.toml` version field.

@@ -47,15 +47,15 @@ pub mod token_counter;
 // Re-export main structs for easier usage
 pub use config::Config;
 pub use generator::ContextGenerator;
-pub use scanner::{RepositoryScanner, ScanResult, FileInfo, FileType};
-pub use parser::{RustParser, RustAnalysis, FunctionInfo, StructInfo, EnumInfo, ImplInfo};
-pub use token_counter::{TokenCounter, ContentPrioritizer, ContentSection};
+pub use parser::{EnumInfo, FunctionInfo, ImplInfo, RustAnalysis, RustParser, StructInfo};
+pub use scanner::{FileInfo, FileType, RepositoryScanner, ScanResult};
+pub use token_counter::{ContentPrioritizer, ContentSection, TokenCounter};
 
 /// Default Result type used by the library
 pub type Result<T> = anyhow::Result<T>;
 
 /// Generates repository context with default configuration
-/// 
+///
 /// This is a convenience function that configures and executes
 /// the entire context generation process.
 ///

@@ -4,7 +4,7 @@
 //! tokenizer and intelligent content prioritization to fit within token limits.
 
 use anyhow::Result;
-use tiktoken_rs::{CoreBPE, get_bpe_from_model};
+use tiktoken_rs::{get_bpe_from_model, CoreBPE};
 
 /// Token counter using the GPT-4 tokenizer for accurate token counting.
 ///
@@ -255,13 +255,13 @@ impl ContentPrioritizer {
 pub struct ContentSection {
     /// Title of the content section.
     pub title: String,
-    
+
     /// The actual content of the section.
     pub content: String,
-    
+
     /// Priority level (higher numbers = higher priority).
     pub priority: u8,
-    
+
     /// Whether this section was truncated to fit token limits.
     pub truncated: bool,
 }

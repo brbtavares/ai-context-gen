@@ -1,7 +1,7 @@
 // Basic usage example of the ai-context-gen library
 // To run: cargo run --example basic_usage
 
-use ai_context_gen::{Config, generate_context_with_config};
+use ai_context_gen::{generate_context_with_config, Config};
 use std::path::PathBuf;
 
 #[tokio::main]

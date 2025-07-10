@@ -126,7 +126,9 @@ impl ContextGenerator {
         sections.extend(self.create_source_code_sections(&scan_result));
 
         // Prioritize and truncate content based on token limit
-        let final_sections = self.prioritizer.prioritize_content(sections, self.config.max_tokens);
+        let final_sections = self
+            .prioritizer
+            .prioritize_content(sections, self.config.max_tokens);
 
         // Generate final context
         let context = self.format_context(final_sections);
@@ -134,7 +136,10 @@ impl ContextGenerator {
         // Write to file
         fs::write(&self.config.output_file, context)?;
 
-        println!("Context generated successfully in: {}", self.config.output_file);
+        println!(
+            "Context generated successfully in: {}",
+            self.config.output_file
+        );
         Ok(())
     }
 
@@ -142,24 +147,30 @@ impl ContextGenerator {
         let mut content = String::new();
         content.push_str("# Project Metadata\n\n");
         content.push_str(&format!("**Name:** {}\n", scan_result.metadata.name));
-        
+
         if let Some(description) = &scan_result.metadata.description {
             content.push_str(&format!("**Description:** {}\n", description));
         }
-        
+
         if !scan_result.metadata.dependencies.is_empty() {
             content.push_str("**Dependencies:**\n");
             for dep in &scan_result.metadata.dependencies {
                 content.push_str(&format!("- {}\n", dep));
             }
         }
-        
+
         if let Some(rust_version) = &scan_result.metadata.rust_version {
             content.push_str(&format!("**Version:** {}\n", rust_version));
         }
 
-        content.push_str(&format!("**Total files:** {}\n", scan_result.project_structure.total_files));
-        content.push_str(&format!("**Total size:** {} bytes\n\n", scan_result.project_structure.total_size));
+        content.push_str(&format!(
+            "**Total files:** {}\n",
+            scan_result.project_structure.total_files
+        ));
+        content.push_str(&format!(
+            "**Total size:** {} bytes\n\n",
+            scan_result.project_structure.total_size
+        ));
 
         ContentSection {
             title: "Project Metadata".to_string(),
@@ -189,7 +200,10 @@ impl ContextGenerator {
         for file in &scan_result.files {
             if matches!(file.file_type, FileType::Markdown) {
                 let mut content = String::new();
-                content.push_str(&format!("# Documentation: {}\n\n", file.relative_path.display()));
+                content.push_str(&format!(
+                    "# Documentation: {}\n\n",
+                    file.relative_path.display()
+                ));
                 content.push_str(&file.content);
                 content.push('\n');
 
@@ -205,7 +219,10 @@ impl ContextGenerator {
         sections
     }
 
-    async fn create_rust_analysis_sections(&self, scan_result: &ScanResult) -> Result<Vec<ContentSection>> {
+    async fn create_rust_analysis_sections(
+        &self,
+        scan_result: &ScanResult,
+    ) -> Result<Vec<ContentSection>> {
         let mut sections = Vec::new();
 
         for file in &scan_result.files {
@@ -213,12 +230,18 @@ impl ContextGenerator {
                 match RustParser::parse_rust_file(&file.path.to_string_lossy(), &file.content) {
                     Ok(analysis) => {
                         let mut content = String::new();
-                        content.push_str(&format!("# Rust Analysis: {}\n\n", file.relative_path.display()));
-                        
+                        content.push_str(&format!(
+                            "# Rust Analysis: {}\n\n",
+                            file.relative_path.display()
+                        ));
+
                         if !analysis.modules.is_empty() {
                             content.push_str("## Modules\n");
                             for module in &analysis.modules {
-                                content.push_str(&format!("- **{}**: {}\n", module.name, module.visibility));
+                                content.push_str(&format!(
+                                    "- **{}**: {}\n",
+                                    module.name, module.visibility
+                                ));
                             }
                             content.push('\n');
                         }
@@ -228,8 +251,10 @@ impl ContextGenerator {
                             for function in &analysis.functions {
                                 let params = function.parameters.join(", ");
                                 let return_type = function.return_type.as_deref().unwrap_or("()");
-                                content.push_str(&format!("- **{}**({}) -> {} ({})\n", 
-                                    function.name, params, return_type, function.visibility));
+                                content.push_str(&format!(
+                                    "- **{}**({}) -> {} ({})\n",
+                                    function.name, params, return_type, function.visibility
+                                ));
                             }
                             content.push('\n');
                         }
@@ -237,8 +262,12 @@ impl ContextGenerator {
                         if !analysis.structs.is_empty() {
                             content.push_str("## Structs\n");
                             for struct_info in &analysis.structs {
-                                content.push_str(&format!("- **{}**: {} fields ({})\n", 
-                                    struct_info.name, struct_info.fields.len(), struct_info.visibility));
+                                content.push_str(&format!(
+                                    "- **{}**: {} fields ({})\n",
+                                    struct_info.name,
+                                    struct_info.fields.len(),
+                                    struct_info.visibility
+                                ));
                             }
                             content.push('\n');
                         }
@@ -246,8 +275,12 @@ impl ContextGenerator {
                         if !analysis.enums.is_empty() {
                             content.push_str("## Enums\n");
                             for enum_info in &analysis.enums {
-                                content.push_str(&format!("- **{}**: {} variants ({})\n", 
-                                    enum_info.name, enum_info.variants.len(), enum_info.visibility));
+                                content.push_str(&format!(
+                                    "- **{}**: {} variants ({})\n",
+                                    enum_info.name,
+                                    enum_info.variants.len(),
+                                    enum_info.visibility
+                                ));
                             }
                             content.push('\n');
                         }
@@ -255,8 +288,11 @@ impl ContextGenerator {
                         if !analysis.implementations.is_empty() {
                             content.push_str("## Implementations\n");
                             for impl_info in &analysis.implementations {
-                                content.push_str(&format!("- **impl {}**: {} methods\n", 
-                                    impl_info.target, impl_info.methods.len()));
+                                content.push_str(&format!(
+                                    "- **impl {}**: {} methods\n",
+                                    impl_info.target,
+                                    impl_info.methods.len()
+                                ));
                             }
                             content.push('\n');
                         }
@@ -269,7 +305,11 @@ impl ContextGenerator {
                         });
                     }
                     Err(e) => {
-                        eprintln!("Warning: Failed to parse {}: {}", file.relative_path.display(), e);
+                        eprintln!(
+                            "Warning: Failed to parse {}: {}",
+                            file.relative_path.display(),
+                            e
+                        );
                     }
                 }
             }
@@ -285,12 +325,12 @@ impl ContextGenerator {
             let mut content = String::new();
             content.push_str(&format!("# Source: {}\n\n", file.relative_path.display()));
             content.push_str("```");
-            
+
             match file.file_type {
                 FileType::Rust => content.push_str("rust"),
                 FileType::Markdown => content.push_str("markdown"),
             }
-            
+
             content.push('\n');
             content.push_str(&file.content);
             content.push_str("\n```\n\n");
@@ -308,13 +348,19 @@ impl ContextGenerator {
 
     fn format_context(&self, sections: Vec<ContentSection>) -> String {
         let mut context = String::new();
-        
+
         // Header
         context.push_str("# AI Context Generation Report\n\n");
-        context.push_str(&format!("Generated on: {}\n", Utc::now().format("%Y-%m-%d %H:%M:%S UTC")));
-        context.push_str(&format!("Repository: {}\n", self.config.repo_path.display()));
+        context.push_str(&format!(
+            "Generated on: {}\n",
+            Utc::now().format("%Y-%m-%d %H:%M:%S UTC")
+        ));
+        context.push_str(&format!(
+            "Repository: {}\n",
+            self.config.repo_path.display()
+        ));
         context.push_str(&format!("Max tokens: {}\n\n", self.config.max_tokens));
-        
+
         // Table of contents
         context.push_str("## Table of Contents\n\n");
         for (i, section) in sections.iter().enumerate() {

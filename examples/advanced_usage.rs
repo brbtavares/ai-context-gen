@@ -29,7 +29,7 @@ async fn main() -> anyhow::Result<()> {
 
     println!("📄 Files found: {}", scan_result.files.len());
     println!("📁 Project: {}", scan_result.metadata.name);
-    
+
     if let Some(description) = &scan_result.metadata.description {
         println!("📝 Description: {}", description);
     }
@@ -37,7 +37,11 @@ async fn main() -> anyhow::Result<()> {
     // List found files
     println!("\n📋 Files to be analyzed:");
     for file in &scan_result.files {
-        println!("  - {} ({:?})", file.relative_path.display(), file.file_type);
+        println!(
+            "  - {} ({:?})",
+            file.relative_path.display(),
+            file.file_type
+        );
     }
 
     // Step 2: Context generation
