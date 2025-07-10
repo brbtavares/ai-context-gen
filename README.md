@@ -34,7 +34,7 @@ Available as:
 
 ```bash
 # Clone the repository
-git clone <repo-url>
+git clone https://github.com/brbtavares/ai-context-gen
 cd ai-context-gen
 
 # Option 1: Using make (recommended)
