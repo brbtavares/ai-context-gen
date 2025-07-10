@@ -238,8 +238,8 @@ impl RustParser {
             name: sig.ident.to_string(),
             visibility: Self::parse_visibility(&item.vis),
             is_async: sig.asyncness.is_some(),
-            parameters: Self::parse_parameters(&sig),
-            return_type: Self::parse_return_type(&sig),
+            parameters: Self::parse_parameters(sig),
+            return_type: Self::parse_return_type(sig),
             documentation: Self::extract_doc_comments(&item.attrs),
         }
     }
