@@ -1,5 +1,65 @@
 # AI Context Generation Report
 
+Generated on: 2025-07-10 12:38:21 UTC
+Repository: .
+Max tokens: 50000
+
+## Table of Contents
+
+1. Project Metadata
+2. Project Structure
+3. Documentation: context.md (truncated)
+
+---
+
+# Project Metadata
+
+**Name:** ai-context-gen
+**Description:** [![Crates.io](https://img.shields.io/crates/v/ai-context-gen.svg)](https://crates.io/crates/ai-context-gen)
+[![Documentation](https://docs.rs/ai-context-gen/badge.svg)](https://docs.rs/ai-context-gen)
+**Dependencies:**
+- clap
+- walkdir
+- serde
+- serde_json
+- syn
+- quote
+- proc-macro2
+- tiktoken-rs
+- anyhow
+- regex
+- chrono
+- version
+- features
+**Version:** 0.1.1
+**Total files:** 12
+**Total size:** 319018 bytes
+
+---
+
+# Project Structure
+
+```
+├── README.md
+├── RELEASE.md
+├── context.md
+│   ├── examples/advanced_usage.rs
+│   ├── examples/basic_usage.rs
+│   ├── src/config.rs
+│   ├── src/generator.rs
+│   ├── src/lib.rs
+│   ├── src/main.rs
+│   ├── src/parser.rs
+│   ├── src/scanner.rs
+│   └── src/token_counter.rs
+```
+
+---
+
+# Documentation: context.md
+
+# AI Context Generation Report
+
 Generated on: 2025-07-10 12:27:04 UTC
 Repository: .
 Max tokens: 50000
@@ -7963,81 +8023,4 @@ impl RepositoryScanner {
                 continue;
             }
 
-            if in_package {
-                if line.starts_with("name") {
-                    if let Some(name) = line.split('=').nth(1) {
-                        metadata.name = name.trim().trim_matches('"').to_string();
-                    }
-                } else if line.starts_with("version") {
-                    if let Some(version) = line.split('=').nth(1) {
-                        metadata.rust_version = Some(version.trim().trim_matches('"').to_string());
-                    }
-                }
-            }
-
-            if in_dependencies && !line.is_empty() {
-                if let Some(dep_name) = line.split('=').next() {
-                    metadata.dependencies.push(dep_name.trim().to_string());
-                }
-            }
-        }
-
-        Ok(())
-    }
-
-    fn extract_description_from_readme(&self, content: &str) -> Option<String> {
-        let lines: Vec<&str> = content.lines().collect();
-        let mut description = String::new();
-
-        for line in lines.iter().take(10) {
-            if line.starts_with('#') {
-                continue;
-            }
-
-            if !line.trim().is_empty() {
-                description.push_str(line);
-                description.push('\n');
-
-                if description.len() > 200 {
-                    break;
-                }
-            }
-        }
-
-        if description.trim().is_empty() {
-            None
-        } else {
-            Some(description.trim().to_string())
-        }
-    }
-}
-
-```
-
----
-
-# Source: src/lib.rs
-
-```rust
-//! # AI Context Generator - Rust Library
-//!
-//! A Rust library for generating structured context from code repositories,
-//! specifically designed for LLMs and AI agents. This library provides both
-//! simple convenience functions and advanced APIs for fine-grained control.
-//!
-//! ## When to Use This Library
-//!
-//! - **Integrate context generation into your Rust applications**
-//! - **Build custom analysis workflows**
-//! - **Create automated documentation systems**
-//! - **Develop AI-powered developer tools**
-//!
-//! For standalone command-line usage, consider using the CLI tool instead.
-//!
-//! ## Features
-//!
-//! - 🔍 **Complete Scanning**: Analyzes all `.rs` and `.md` files in repositories
-//! - 🌳 **AST Analysis**: Extracts structures, functions, enums and implementations
-//! - 📊 **Token Control**: Respects limits and prioritizes important content
-//! - 📁 **Project Structure**: Generates file tree visualizations
-//! - 📖 **Documentation
+            if in_package

@@ -149,18 +149,18 @@ impl ContextGenerator {
         content.push_str(&format!("**Name:** {}\n", scan_result.metadata.name));
 
         if let Some(description) = &scan_result.metadata.description {
-            content.push_str(&format!("**Description:** {}\n", description));
+            content.push_str(&format!("**Description:** {description}\n"));
         }
 
         if !scan_result.metadata.dependencies.is_empty() {
             content.push_str("**Dependencies:**\n");
             for dep in &scan_result.metadata.dependencies {
-                content.push_str(&format!("- {}\n", dep));
+                content.push_str(&format!("- {dep}\n"));
             }
         }
 
         if let Some(rust_version) = &scan_result.metadata.rust_version {
-            content.push_str(&format!("**Version:** {}\n", rust_version));
+            content.push_str(&format!("**Version:** {rust_version}\n"));
         }
 
         content.push_str(&format!(

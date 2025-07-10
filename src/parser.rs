@@ -260,7 +260,7 @@ impl RustParser {
                 .iter()
                 .enumerate()
                 .map(|(i, f)| FieldInfo {
-                    name: format!("field_{}", i),
+                    name: format!("field_{i}"),
                     field_type: f.ty.to_token_stream().to_string(),
                     visibility: Self::parse_visibility(&f.vis),
                 })
@@ -444,7 +444,7 @@ impl RustParser {
                 let trait_part = impl_info
                     .trait_name
                     .as_ref()
-                    .map(|t| format!("{} for ", t))
+                    .map(|t| format!("{t} for "))
                     .unwrap_or_default();
                 summary.push_str(&format!("- `impl {}{}`\n", trait_part, impl_info.target));
             }
