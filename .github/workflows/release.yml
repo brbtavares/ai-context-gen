@@ -18,7 +18,7 @@ jobs:
     - name: Install Rust
       uses: dtolnay/rust-toolchain@stable
     - name: Cache cargo
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ~/.cargo/registry
@@ -66,7 +66,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y musl-tools
     - name: Cache cargo
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ~/.cargo/registry
@@ -81,7 +81,7 @@ jobs:
         tar czf ../../../${{ matrix.name }} ai-context-gen
         cd -
     - name: Upload binary
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.name }}
         path: ${{ matrix.name }}
@@ -94,7 +94,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Download all artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
     - name: Get version from tag
       id: get_version
       run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
@@ -156,7 +156,7 @@ jobs:
     - name: Install Rust
       uses: dtolnay/rust-toolchain@stable
     - name: Cache cargo
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ~/.cargo/registry
