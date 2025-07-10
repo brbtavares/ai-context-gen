@@ -8,7 +8,7 @@ readme = "README.md"
 homepage = "https://github.com/brbtavares/ai-context-gen"
 repository = "https://github.com/brbtavares/ai-context-gen"
 license = "MIT"
-keywords = ["context", "generator", "llm", "ai", "rust", "analysis"]
+keywords = ["context", "generator", "llm", "ai", "rust"]
 categories = ["command-line-utilities", "development-tools", "text-processing"]
 exclude = [
     "target/*",
